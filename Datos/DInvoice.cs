@@ -12,67 +12,57 @@ namespace Datos
     public class DInvoice
     {
 
-      
-        public void conexion()
-        {
+
+        // Configurar la cadena de conexión a tu base de datos
+        public static string connectionString = "Data Source=LAB1504-15\\SQLEXPRESS ;Initial Catalog=Tecsup;User ID=erika;Password= ";
 
 
-            // Configurar la cadena de conexión a tu base de datos
-            string connectionString = "Data Source=LAB1504-16\\SQLEXPRESS ;Initial Catalog=Tecsup;User ID=erika;Password= ";
+        public List<Invoice> Get() {
 
-            try
+            List<Invoice> result=new  List<Invoice>();
+
+            // Crear una conexión a la base de datos
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                // Crear una conexión a la base de datos
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                connection.Open();
+
+
+                string query = "ListarInvoice";
+
+                // Crear un comando para ejecutar el procedimiento almacenado
+                using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    connection.Open();
+                    command.CommandType = CommandType.StoredProcedure;
 
-                    // Crear un comando para ejecutar el procedimiento almacenado
-                    using (SqlCommand command = new SqlCommand("ListarInvoice", connection))
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        command.CommandType = CommandType.StoredProcedure;
+                     
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        // Leer los datos y agregarlos a la lista de productos
+                        while (reader.Read())
                         {
-                            List<Invoice> invoices = new List<Invoice>();
-
-                            // Leer los datos y agregarlos a la lista de productos
-                            while (reader.Read())
+                            Invoice invoice = new Invoice()
                             {
-                                Invoice invoice = new Invoice()
-                                {
-                                    invoice_id = Convert.ToInt32(reader["invoice_id"]),
-                                    customer_id = Convert.ToInt32(reader["customer_id"]),
-                                    date = Convert.ToDateTime(reader["date"]),
-                                    total = Convert.ToDecimal(reader["total"]),
+                                invoice_id = Convert.ToInt32(reader["invoice_id"]),
+                                customer_id = Convert.ToInt32(reader["customer_id"]),
+                                date = Convert.ToDateTime(reader["date"]),
+                                total = Convert.ToDecimal(reader["total"]),
 
-                                };
+                            };
 
-                                invoices.Add(invoice);
-                            }
-
-                           
+                            result.Add(invoice);
                         }
-                    }
-           }
-            }
-            catch (Exception ex)
-            {
 
+
+                    }
+                }
+                connection.Close();
             }
+            return result;
         }
+    }
     
 
-
-        public List<Invoice> Get()
-        {
-        }
-
-
-        public void InsertInvoice(Invoice invoice) { }
-
-        public void UpdateInvoice(Invoice invoice) { }
-
-        public void DeleteInvoice (int invoice) { }
-    }
 }
+    
+

@@ -27,11 +27,16 @@ namespace Sem7
             InitializeComponent();
 
 
-           BInvoice invoice = new BInvoice();
-
-        <List> Invoice=  invoice.GetByDate(Convert.ToDateTime("2023-10-10 10:00:00"));
-
+           
          
+        }
+
+        private void Listar(object sender, RoutedEventArgs e)
+        {
+            BInvoice invoice = new BInvoice();
+
+            dataGrid.ItemsSource = invoice.GetByDate(DateTime.Now);
+
         }
     }
 }

@@ -7,6 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <DataGrid x:Name="dataGrid" AutoGenerateColumns="True"/>
+        <StackPanel>
+            <Button Content="Listar "  Click="Listar" ></Button>
+  
+
+            <DataGrid Name="dataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="500" Width="952" Margin="12,21,0,0" Background="LightGray" RowBackground="LightYellow" AlternatingRowBackground="LightBlue" BorderBrush="Gray" BorderThickness="1">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID " Width="100" Binding="{Binding invoice_id }" />
+                    <DataGridTextColumn Header="Customer" Width="100" Binding="{Binding customer_id}" />
+                    <DataGridTextColumn Header="Date" Width="100" Binding="{Binding date}" />
+                    <DataGridTextColumn Header="TOTAL" Width="100" Binding="{Binding total}" />
+                </DataGrid.Columns>
+            </DataGrid>
+
+        </StackPanel>
     </Grid>
 </Window>

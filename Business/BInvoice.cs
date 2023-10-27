@@ -15,8 +15,8 @@ namespace Business
         {
             DInvoice data = new DInvoice();
             var invoices = data.Get();
-            var result = invoices.Where(x => x.date == date).ToList();
-            return result;
+          //   var result = invoices.Where(x => x.date == date).ToList();
+            return invoices;
         }
 
 
