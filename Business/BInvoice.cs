@@ -20,7 +20,24 @@ namespace Business
         }
 
 
-      
+
+        public void DeleteInvoice(int id)
+        {
+            DInvoice data = new DInvoice();
+            data.DeleteInvoice(id);
+        }
+
+        public void CreateInvoice(Invoice invoice)
+        {
+            DInvoice data = new DInvoice();
+            data.CreateInvoice(invoice);
+        }
+
+        public void UpdateInvoice(Invoice invoice)
+        {
+            DInvoice data = new DInvoice();
+            data.UpdateInvoice(invoice);
+        }
 
     }
 }

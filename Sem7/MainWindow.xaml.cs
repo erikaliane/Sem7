@@ -1,5 +1,6 @@
 ﻿using Business;
 using Entity;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,13 +23,15 @@ namespace Sem7
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+
+        BInvoice bInvoice = new BInvoice();
+        
+
+        private void DeleteInvoice(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
-
-
-           
-         
+            int invoiceId = (int)((Button)sender).CommandParameter;
+            bInvoice.DeleteInvoice(invoiceId);
+            ListInvoice();
         }
 
         private void Listar(object sender, RoutedEventArgs e)
@@ -38,5 +41,42 @@ namespace Sem7
             dataGrid.ItemsSource = invoice.GetByDate(DateTime.Now);
 
         }
+
+        private void ListInvoice()
+        {
+            BInvoice invoice = new BInvoice();
+
+            dataGrid.ItemsSource = invoice.GetByDate(DateTime.Now);
+
+        }
+
+        private void Registrar(object sender, RoutedEventArgs e)
+        {
+            // Crear una nueva factura con los datos ingresados
+            Invoice newInvoice = new Invoice
+            {
+                customer_id = int.Parse(txtCustomerId.Text),
+                date = dpDate.SelectedDate ?? DateTime.Now,
+                total = decimal.Parse(txtTotal.Text),
+                active = 1 // Puedes establecer el valor activo según tus necesidades
+            };
+
+            bInvoice.CreateInvoice(newInvoice);
+            ListInvoice();
+        }
+
+        private void EditarRegistro(object sender, RoutedEventArgs e)
+        {
+            Invoice selectedInvoice = (Invoice)((Button)sender).CommandParameter;
+            if (selectedInvoice != null)
+            {
+                txtCustomerId.Text = selectedInvoice.customer_id.ToString();
+                dpDate.SelectedDate = selectedInvoice.date;
+                txtTotal.Text = selectedInvoice.total.ToString();
+            }
+        }
+
+
+
     }
 }

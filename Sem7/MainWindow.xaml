@@ -5,21 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Sem7"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="808" Width="1191">
     <Grid>
         <StackPanel>
-            <Button Content="Listar "  Click="Listar" ></Button>
-  
+            <Button Content="Listar" Click="Listar"></Button>
 
             <DataGrid Name="dataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" Height="500" Width="952" Margin="12,21,0,0" Background="LightGray" RowBackground="LightYellow" AlternatingRowBackground="LightBlue" BorderBrush="Gray" BorderThickness="1">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID " Width="100" Binding="{Binding invoice_id }" />
+                    <DataGridTextColumn Header="ID" Width="100" Binding="{Binding invoice_id}" />
                     <DataGridTextColumn Header="Customer" Width="100" Binding="{Binding customer_id}" />
                     <DataGridTextColumn Header="Date" Width="100" Binding="{Binding date}" />
                     <DataGridTextColumn Header="TOTAL" Width="100" Binding="{Binding total}" />
+
+                    <DataGridTemplateColumn Header="Acción">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Editar" Click="EditarRegistro" CommandParameter="{Binding}" />
+                                    <Button Content="Eliminar" Click="DeleteInvoice" CommandParameter="{Binding invoice_id}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
 
+            <!-- Campos de entrada para registro y edición -->
+            <Label Content="Customer ID" />
+            <TextBox Name="txtCustomerId" Width="200" />
+            <Label Content="Date" />
+            <DatePicker Name="dpDate" Width="200" />
+            <Label Content="Total" />
+            <TextBox Name="txtTotal" Width="200" />
+            <Button Content="Registrar" Click="Registrar" Width="100" />
         </StackPanel>
     </Grid>
 </Window>
